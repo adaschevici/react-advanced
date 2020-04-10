@@ -1,0 +1,4 @@
+[submodule "themes/learn"]
+	path = themes/learn
+	url = https://github.com/adaschevici/orange-is-the-new-black.git
+    ignore = dirty
