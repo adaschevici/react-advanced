@@ -8,7 +8,7 @@ draft = false
 
 #### lerna - there be hydras
 
-{{< lazy-image image="lerna-logo.png" lightbox=true />}}
+{{< lazy-image image="lerna-logo.png" lightbox=false />}}
 
 #### 🎉 lerna is an open source package to manage multi package javascript monorepos 🎉
 
@@ -80,6 +80,36 @@ The seven-headed monster you’ll see at the top of the project’s website and 
     ```bash
     npx lerna create @goodreads-v2/component-library
     ```
+- the `packages/component-library/package.json` should end up looking like this
+
+    ```json
+    {
+      "name": "@goodreads-v2/component-library",
+      "version": "0.0.0",
+      "description": "components library and design system",
+      "keywords": [
+        "components",
+        "design-system"
+      ],
+      "author": "John Doe <j.doe@gmail.com>",
+      "homepage": "",
+      "license": "MIT",
+      "main": "lib/component.bundle.js",
+      "directories": {
+        "lib": "lib",
+        "test": "__tests__"
+      },
+      "files": [
+        "lib"
+      ],
+      "publishConfig": {
+        "access": "public"
+      },
+      "scripts": {
+        "test": "echo \"Error: run tests from root\" && exit 1"
+      }
+    }
+    ```
 
 - add app package we can do this via `create-react-app`
 
@@ -141,3 +171,23 @@ In order to start from the master branch of the repo the clone command is a bit 
 ```bash
 git clone --recurse-submodules git@github.com:adaschevici/goodreads-v2.git
 ```
+
+#### Add dependencies, and manage them
+There are a few commands that we will use throughout that work in bulk.
+- clean all node_modules
+  ```bash
+  npx lerna clean
+  ```
+
+- install dependencies in `packages/`
+  ```bash
+  npx lerna bootstrap
+    ```
+
+- locally available packages like `@goodreads-v2/component-library` can be installed via lerna.
+  {{% notice tip %}}
+  The cool part is that you are not required to publish them but you can work with them as if they were.
+  {{% /notice %}}
+  ```bash
+  npx lerna add @goodreads-v2/component-library --scope=@goodreads-v2/goodreads
+  ```

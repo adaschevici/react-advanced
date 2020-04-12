@@ -1,0 +1,16 @@
+{{ $type := .Get "type" }}
+{{ $handle := .Get "handle" }}
+
+{{ if eq $type "twitter" }}
+  <i class="fab fa-twitter"></i>
+  <a href={{ $handle }}>Twitter</a>
+{{ else if eq $type "github" }}
+  <i class="fab fa-github"></i>
+  <a href={{ $handle }}>Github</a>
+{{ else if eq $type "linkedin" }}
+  <i class="fab fa-linkedin"></i>
+  <a href={{ $handle }}>LinkedIn</a>
+{{ else }}
+  <i class="fas fa-globe"></i>
+  <a href={{ $handle }}>Web</a>
+{{ end }}

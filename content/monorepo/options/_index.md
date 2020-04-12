@@ -75,4 +75,4 @@ for more sofisticated dependency handlling.
 react dependencies which is a common misshap when using lerna
 
 ### The Gist 📌
-{{< lazy-image image="monorepo.png" lightbox=true />}}
+{{< lazy-image image="monorepo.png" lightbox=false />}}
