@@ -1,5 +1,5 @@
 +++
-title = "Able Chapter"
+title = "Design System"
 chapter = true
 weight = 2
 pre = "<b>2. </b>"

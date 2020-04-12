@@ -1,10 +1,8 @@
 {{ $image := (.Page.Resources.GetMatch  (index .Params.image)) }}
 {{ $alt := .Get "alt" }}
 {{ $width := .Get "width" }}
-{{ $boxwidth := default "50vw" (.Get "boxwidth") }}
-{{ $boxheight := default "50vw" (.Get "boxheight") }}
 {{ $borderless := .Get "borderless" }}
-{{ $placeholder := ($image.Resize "48x q20") | images.Filter (images.GaussianBlur 2) }}
+{{ $placeholder := ($image.Resize "48x q20") | images.Filter (images.GaussianBlur 0.7) }}
 {{ $src := $image }}
 {{ $src_set := ""}}
 
@@ -57,22 +55,19 @@
   </figure>
 </noscript>
 
-<div style="height: {{$boxheight}}; width: {{$boxwidth}};">
-  <figure class="{{ $border_class }} lazy">
+<figure class="{{ $border_class }} lazy">
+  {{ if .Get "lightbox" }}
+  <a href='{{ $image.RelPermalink }}'>
+    {{ end }}
+    <img class="lazyload" data-sizes="auto" src="{{ $src.RelPermalink }}" {{ if $width }}width="{{$width}}"{{ end }}
+      srcset="data:image/jpeg;base64,{{ $placeholder.Content | base64Encode }}" data-src="{{ $src.RelPermalink }}"
+      data-srcset="{{ $src_set }}" width="100%" height="100%" alt="{{ $alt }}" />
     {{ if .Get "lightbox" }}
-    {{ printf "%#v" $image.Height }}
-    <a href='{{ $image.RelPermalink }}'>
-      {{ end }}
-      <img class="lazyload" data-sizes="auto" src="{{ $src.RelPermalink }}" {{ if $width }}width="{{$width}}"{{ end }}
-        srcset="data:image/jpeg;base64,{{ $placeholder.Content | base64Encode }}" data-src="{{ $src.RelPermalink }}"
-        data-srcset="{{ $src_set }}" width="100%" height="100%" alt="{{ $alt }}" />
-      {{ if .Get "lightbox" }}
-    </a>
-    {{ end }}
-    {{ if .Inner }}
-    <figcaption>
-      <em>{{ .Inner }}</em>
-    </figcaption>
-    {{ end }}
-  </figure>
-</div>
+  </a>
+  {{ end }}
+  {{ if .Inner }}
+  <figcaption>
+    <em>{{ .Inner }}</em>
+  </figcaption>
+  {{ end }}
+</figure>
