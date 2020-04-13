@@ -191,3 +191,12 @@ There are a few commands that we will use throughout that work in bulk.
   ```bash
   npx lerna add @goodreads-v2/component-library --scope=@goodreads-v2/goodreads
   ```
+- then we want to add `styled-components` and `styled-system` to the goodreads react app
+  ```bash
+  npx lerna add styled-components --scope=@goodreads-v2/goodreads
+  npx lerna add styled-system --scope=@goodreads-v2/goodreads
+  ```
+  {{% notice info %}}
+  Adding multiple packages at once does not seem to work very well with lerna because lerna does
+  multiple things when it installs a package.
+  {{% /notice %}}
