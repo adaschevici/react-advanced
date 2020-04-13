@@ -72,10 +72,11 @@ rollup has a large collection of plugins that is helpful for bundling the compon
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import babel from "rollup-plugin-babel";
+import { terser } from "rollup-plugin-terser";
 import bundleSize from "rollup-plugin-bundle-size";
 
 export default {
-  input: "src/components/index.js",
+  input: "src/index.js",
   output: {
     file: "lib/component.bundle.js",
     format: "cjs"
@@ -98,9 +99,11 @@ export default {
         "react-is": ["typeOf", "isElement", "isValidElementType"]
       }
     }),
+    terser(),
     bundleSize()
   ]
 };
+
 ```
 
 #### rollup config
@@ -130,3 +133,41 @@ is optimally configured for the environment you are building for.
 {{% /notice %}}
 
 ### Storybook
+Storybook, while not required is very useful for show casing components, component usage
+variants and themes. Storybook has an active community and also we have quite a few addons
+for various features.
+  - [`knobs`](https://github.com/storybookjs/storybook/tree/master/addons/knobs)
+  - [`viewports`](https://github.com/storybookjs/storybook/tree/master/addons/viewport)
+  - [etc](https://storybook.js.org/addons/)
+
+Easy to set up:
+```bash
+// add the storybook cli package
+npx lerna add --dev @storybook/cli --scope=@goodreads-v2/component-library
+
+// run sb init to pull in dependencies and configure the package
+npx lerna exec sb init --scope=@goodreads-v2/component-library
+```
+Needs some configuration as well:
+
+Config to specify the file pattern for stories and addons.
+```javascript
+// .storybook/main.js
+module.exports = {
+  stories: ["../src/**/*.stories.js"],
+  addons: ["@storybook/addon-actions", "@storybook/addon-links"]
+};
+```
+
+Some fancier config for custom loading of stories if required.
+```javascript
+// .storybook/preview.js
+import { configure } from "@storybook/react";
+
+function loadStories() {
+  require("../src/components/alert/index.stories.js");
+  // You can require as many stories as you need.
+}
+
+configure(loadStories, module);
+```
