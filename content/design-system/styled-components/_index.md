@@ -36,7 +36,7 @@ The api is generally the same and migration from one to the other is fairly stra
 be working with the classical styled-components, but it doesn't hurt to be aware of the other options.
 
 #### Styled system
-The `styled-system` is used for defining themes for your styled components design system. You can use it to
+The `styled-system` is used for defining theme numeric scales for your styled components design system. You can use it to
 define various scales and also breakpoints for your components. This helps having a centralized set of
 props and breakpoints to use in your components. This approach overall decreases code duplication
 and unifies the coding standards in your library.

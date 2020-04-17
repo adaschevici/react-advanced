@@ -177,3 +177,37 @@ export default DynamicComponent;
 The list of props imported from `design-system` is the list of options that
 the components that use this mixin are able to receive and as you can see
 it is very configurable.
+
+We then use the `DynamicComponent` to wrap our various text styles.
+```javascript
+// src/typography/spooky.js
+import React from 'react'
+import DynamicComponent from './dynamic-component'
+
+const colors = {
+  blue: "#004170",
+}
+
+const spooky = {
+  tag: "h1",
+  fontSize: 12,
+  fontWeight: 700,
+  lineHeight: "32px",
+  fontFamily: "Spooky Italic",
+  color: colors.blue
+}
+
+export default props => (
+  <DynamicComponent {...spooky} {...props}>
+    {props.children}
+  </DynamicComponent>
+);
+```
+
+Wiring everything together we need to re-export the defined components from
+the index file in our typography so that we can use it like this: `import { Spooky } from "typography";`
+```javascript
+import Spooky from './spooky'
+
+export { Spooky }
+```
