@@ -7,7 +7,7 @@ draft = false
 +++
 
 
-{{< lazy-image image="gotcha.jpg" lightbox=true />}}
+{{< lazy-image image="gotcha.jpg" lightbox=false />}}
 
 #### Now let's put to good use what we learned so far
 

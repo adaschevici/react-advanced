@@ -8,8 +8,6 @@ draft = false
 +++
 
 
-#### What should the path be?
+#### Atomic design
 
-{{< lazy-image image="pages-chapter-2.png" lightbox=true />}}
-
-{{< google-slides token="1nFc4ARtR5oJ-BpIk33Py7Yvn-o5CbfXteODspFtpF90" >}}
+{{< google-slides token="1WeS_MJLfj_rNH43a5bexV7XT0pSn-tOImNN8JeOEjco" >}}
