@@ -1,9 +1,9 @@
----
++++
 title: "Themes"
 date: 2020-04-15T13:36:45+01:00
 weight: 3
 draft: false
----
++++
 
 So far we've included the config in the components. This will only
 get us so far as we can eventually see that we wind up reusing the

@@ -1,8 +1,10 @@
----
++++
 title: "Responsive"
 date: 2020-04-15T13:36:55+01:00
 draft: false
----
+weight = 4
+draft = false
++++
 
 The most amazing feature of the `styled-system` are the scales.
 The true power of scales is apprent when we deal with responsive design.

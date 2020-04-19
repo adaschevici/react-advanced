@@ -12,4 +12,3 @@ draft = false
 
 {{< google-slides token="1LKup2J5QuFAC-Lp9lwfzZHTh7zcdaG2NyHeVIQTbijY" >}}
 
-

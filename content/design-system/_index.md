@@ -8,6 +8,12 @@ draft = false
 +++
 
 
-#### Atomic design
+## Atomic design
 
 {{< google-slides token="1WeS_MJLfj_rNH43a5bexV7XT0pSn-tOImNN8JeOEjco" >}}
+
+### 🏁 Checkpoint 🏁
+
+```bash
+git checkout 01-lerna-dependencies
+```
