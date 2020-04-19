@@ -81,8 +81,8 @@ export default {
     "prop-types",
     "styled-components",
     "styled-system",
-    "./CCSpookytooth-Italic.woff",
-    "./CCSpookytooth-Italic.woff2"
+    "./Artifika-Regular.woff",
+    "./Artifika-Regular.woff2"
   ],
   plugins: [
     resolve(),
@@ -180,7 +180,7 @@ it is very configurable.
 
 We then use the `DynamicComponent` to wrap our various text styles.
 ```javascript
-// src/typography/spooky.js
+// src/typography/artifika.js
 import React from 'react'
 import DynamicComponent from './dynamic-component'
 
@@ -188,17 +188,17 @@ const colors = {
   blue: "#004170",
 }
 
-const spooky = {
+const artifika = {
   tag: "h1",
   fontSize: 12,
   fontWeight: 700,
   lineHeight: "32px",
-  fontFamily: "Spooky Italic",
+  fontFamily: "Artifika",
   color: colors.blue
 }
 
 export default props => (
-  <DynamicComponent {...spooky} {...props}>
+  <DynamicComponent {...artifika} {...props}>
     {props.children}
   </DynamicComponent>
 );
@@ -207,7 +207,7 @@ export default props => (
 Wiring everything together we need to re-export the defined components from
 the index file in our typography so that we can use it like this: `import { Spooky } from "typography";`
 ```javascript
-import Spooky from './spooky'
+import Artifika from './artifika'
 
-export { Spooky }
+export { Artifika }
 ```

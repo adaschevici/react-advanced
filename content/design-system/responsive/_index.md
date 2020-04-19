@@ -1,9 +1,8 @@
 +++
-title: "Responsive"
-date: 2020-04-15T13:36:55+01:00
-draft: false
-weight = 4
+title = "Responsive"
+date = 2020-04-15T13:36:55+01:00
 draft = false
+weight = 4
 +++
 
 The most amazing feature of the `styled-system` are the scales.
@@ -44,7 +43,7 @@ const colors = {
 };
 
 const fontFamilies = {
-  heading: "Spooky Italic",
+  heading: "Artifik",
   body: "PT Serif, Helvetica, Arial, sans-serif",
   code: "Roboto Mono, monospace"
 };
