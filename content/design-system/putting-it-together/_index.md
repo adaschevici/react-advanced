@@ -36,6 +36,7 @@ npx lerna add @storybook/addon-storyshots --dev --scope=@goodreads-v2/component-
 ```
 
 To have a look at practical examples in `storybook` a great resource I have found is [here](https://storybooks-official.netlify.app/)
+
 To get a feel for what others are doing you can check out a gallery of storybook deployments [here](https://storybook.js.org/docs/examples/)
 
 Now that we have installed all the storybook addons we need to configure things so that they work together.
@@ -51,11 +52,15 @@ Individual exercises:
 1) Add an npm script for running tests in component-library
 2) Create configuration file for storyshots to enable snapshot creation
 3) Add `react-test-renderer` to allow jest to take snapshots
+4) Make use of the created `<Artifika />` header in the goodreads app and check that it is used in a reponsive manner
+based on the scales defined in the breakpoints
 
-Things to look out for:
+#### ⚠️  Things to watch out for ⚠️:
 - you may come across an issue similar to what we saw in the first chapter with a duplicate react instance
   This can be solved by manually hoisting the package causing it to the problem to the root of the repo and removing it
   from its original package.json. Every time you do this you should clean up your environment removing node modules and
   the `package-lock.json` files
 - you may run into an issue while running the snapshot tests caused by the static fonts. Static files need to be mocked
   as they will not actually create image snapshots but virtual dom snapshots
+- check the console for warnings. you can get useful information, for example if you have two instances of styled
+  components the theme is not applied correctly which can lead to unpredictable results

@@ -36,10 +36,9 @@ theme = "learn"
   # Order sections in menu by "weight" or "title". Default to "weight"
   ordersectionsby = "weight"
   # Change default color scheme with a variant one. Can be "red", "blue", "green", "orange".
-  themeVariant = "orange"
   logotype = "react"
-  githublink = "https://github.com/adaschevici/torque"
-  githubalias = "adaschevici/torque"
+  githublink = "https://github.com/adaschevici/react-advanced"
+  githubalias = "adaschevici/react-advanced"
 
 [[menu.shortcuts]]
 name = "<i class='fab fa-github'></i> Github repo"

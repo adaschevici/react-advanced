@@ -8,6 +8,13 @@ draft = false
 +++
 
 
+#### The road so far
+
+- Looked at the various parts that compose our repo
+- looked at lerna and the other variants for managing monorepos
+- installed and configured lerna, storybook, the api git submodule and the main react application
+- configured rollup and dependencies for the component library
+
 ## Atomic design
 
 {{< google-slides token="1WeS_MJLfj_rNH43a5bexV7XT0pSn-tOImNN8JeOEjco" >}}
