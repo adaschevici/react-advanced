@@ -19,6 +19,27 @@ draft = false
 
 {{< google-slides token="15yy4cBAZvOXDVi_fTFRa8jYtY3HY9dsCUaY6HjnxCOc" >}}
 
+## Let's look at
+
+{{<mermaid>}}
+graph LR
+    subgraph goodreads
+        id1
+        id3
+    end
+    id1(sagas) ==interact with API==> id2(fetch meta, images and ratings, perform login and registration)
+    id3(redux and selectors) ==store data==> id4(store book and user login data)
+{{</mermaid>}}
+
+{{<mermaid>}}
+graph LR
+    subgraph library
+        id1
+        id3
+    end
+    id1(login component) ==stateful==> id2(functional components using hooks)
+    id3(register component) ==stateful==> id2(functional components using hooks)
+{{</mermaid>}}
 ### 🏁 Checkpoint 🏁
 
 ```bash

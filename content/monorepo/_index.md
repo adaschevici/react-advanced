@@ -12,35 +12,17 @@ draft = false
 
 {{< google-slides token="1LKup2J5QuFAC-Lp9lwfzZHTh7zcdaG2NyHeVIQTbijY" >}}
 
+
+## Functional diagram
+
 {{<mermaid>}}
 graph TD
-    B["fa:fa-apple for peace"]
-    B--"manages"-->C[fa:fa-ban forbidden]
-    B-->D(fa:fa-spinner);
-    B-->E(A fa:fa-camera-retro perhaps?);
-{{< /mermaid >}}
-
-{{<mermaid>}}
-sequenceDiagram
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
+    subgraph goodreads-v2
+        id1
+        id4
     end
-    Note right of John: Rational thoughts!
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
-{{< /mermaid >}}
-
-{{<mermaid>}}
-sequenceDiagram
-    autonumber
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts!
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
-{{< /mermaid >}}
+    id1(Lerna) ==manages==> id2(Component Library built with rollup)
+    id1(Lerna) ==manages==> id3(React Application created with CRA)
+    id3 ==uses==> id2
+    id4(Git) ==manages==> id5(fake API as submodule)
+{{</mermaid>}}
