@@ -19,7 +19,7 @@ draft = false
 
 {{< google-slides token="1WeS_MJLfj_rNH43a5bexV7XT0pSn-tOImNN8JeOEjco" >}}
 
-## Functional diagram
+## Let's look at
 
 {{<mermaid>}}
 graph LR
@@ -30,7 +30,7 @@ graph LR
     end
     id1(theme) ==defines==> id2(colors, spacing, breakpoints, font sizes and weights)
     id3(typography) ==defines==> id4(fonts, text styles)
-    id5(storybook) ==creates==> id6(playground for working with components)
+    id5(storybook) ====> id6(playground for working with components and snapshot tests)
 {{</mermaid>}}
 
 

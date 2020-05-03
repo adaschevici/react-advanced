@@ -40,6 +40,9 @@ theme = "learn"
   githublink = "https://github.com/adaschevici/react-advanced"
   githubalias = "adaschevici/react-advanced"
 
+[blackfriday]
+extensions = ["hardLineBreak"]
+
 [[menu.shortcuts]]
 name = "<i class='fab fa-github'></i> Github repo"
 identifier = "ds"

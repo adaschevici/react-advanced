@@ -44,4 +44,6 @@ graph LR
 
 ```bash
 git checkout 03-fast-forward-branch
+npm run clean:all
+npm run bootstrap
 ```
