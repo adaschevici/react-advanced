@@ -3,8 +3,6 @@ title = "Fast forward to redux and sagas"
 weight = 1
 date = 2020-04-15T13:48:49+01:00
 draft = false
-[blackfriday]
-  extensions = ["hardLineBreak"]
 +++
 
 
@@ -88,7 +86,7 @@ need to have the problem in the first place.
  😈  __Premature optimization is the root of all evil__ 😈
 {{% /notice %}}
 
-#### Fast forward noteworthy
+#### Fast forward noteworthy concepts
 We jumped ahead to a point in our application where we have a navbar, authentication and state management already wired
 up in the application in order to do a deeper dive into the way complex side effects are managed using sagas. Side
 effects are an important aspect in complex applications that raises quite a few challenges in practice.
@@ -99,3 +97,6 @@ Interesting gotchas while jumping ahead:
   [component](https://github.com/adaschevici/goodreads-v2/blob/03-fast-forward-branch/packages/component-library/src/components/nav-bar/index.js),
   the [story](https://github.com/adaschevici/goodreads-v2/blob/03-fast-forward-branch/packages/component-library/src/components/nav-bar/index.stories.js). We had
   to add a new storybook addon for routing wrapping ease of use `storybook-react-router`
+- if we have two instances of `react-router-dom`, one referenced from the component library and one inside our app then
+  we will have yet another package clash so we need to mark it as external in
+  `packages/component-library/rollup.config.js` and also hoist it so that the static storybook still builds correctly.
