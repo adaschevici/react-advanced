@@ -13,7 +13,7 @@ draft = true
 - looked at sagas for managing complex side effects
 - looked at the patterns we can use to unittest each functionality
 
-## Atomic design
+## CI+(CI) / CD
 
 {{< google-slides token="1YKd1XPS_MMS5-TSf5d9GB7owhrBxTZomByAdgVakqYo" >}}
 

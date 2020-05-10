@@ -5,5 +5,6 @@ draft: false
 ---
 
 
-### Hello
+### Welcome everyone
 
+{{< lazy-image image="Simona&Artur.jpg" lightbox=false />}}
