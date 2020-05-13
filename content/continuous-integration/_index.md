@@ -13,7 +13,14 @@ draft = true
 - looked at sagas for managing complex side effects
 - looked at the patterns we can use to unittest each functionality
 
-## CI+(CI) / CD
+## CI ⚡CD
 
 {{< google-slides token="1YKd1XPS_MMS5-TSf5d9GB7owhrBxTZomByAdgVakqYo" >}}
 
+### 🏁 Checkpoint 🏁
+
+```bash
+git checkout 04-side-effects
+npm run clean:all
+npm run bootstrap
+```
