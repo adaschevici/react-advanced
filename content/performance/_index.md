@@ -26,7 +26,7 @@ draft = false
 ### 🏁 Checkpoint 🏁
 
 ```bash
-git checkout 05-continuous-integration
+git checkout 06-performance
 npm run clean:all
 npm run bootstrap
 ```
