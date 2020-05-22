@@ -2,7 +2,7 @@
 title = "What to look for"
 date = 2020-05-13T17:18:47+01:00
 weight = 2
-draft = true
+draft = false
 +++
 
 ## There are a few to try when targeting optimization

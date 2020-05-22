@@ -2,7 +2,7 @@
 title = "Development Flow"
 date = 2020-05-08T13:06:22+01:00
 weight = 2
-draft = true
+draft = false
 +++
 
 ## DevOps (addendum)

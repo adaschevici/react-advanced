@@ -3,7 +3,7 @@ title = "Continuous Integration"
 date = 2020-05-07T16:43:09+01:00
 weight = 4
 pre = "<b>4. </b>"
-draft = true
+draft = false
 +++
 
 #### The road so far
