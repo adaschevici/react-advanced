@@ -11,4 +11,12 @@ draft = false
 
 ## Secondly here is a brain dump of my browser bookmarks for any further reference
 
+## Auxilliary repo for the mock API
+Show it some love, it's a pretty cool project to prototype various API use cases.
+Taking feature suggestions and PRs so please ping me if you have an idea.
+
+```bash
+https://github.com/adaschevici/jungle-jim
+```
+
 {{< braindump >}}

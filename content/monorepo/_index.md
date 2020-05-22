@@ -13,6 +13,19 @@ draft = false
 {{< google-slides token="1LKup2J5QuFAC-Lp9lwfzZHTh7zcdaG2NyHeVIQTbijY" >}}
 
 
+## Code location:
+```bash
+https://github.com/adaschevici/goodreads-v2
+```
+
+## Auxilliary repo for the mock API
+This is a mock API I've developed to mimic poor conenctivity and auth on top of `json-server`
+We will use it as a submodule in the app but if you want to use it in other projects you can clone it standalone
+
+```bash
+https://github.com/adaschevici/jungle-jim
+```
+
 ## Let's look at
 
 {{<mermaid>}}
