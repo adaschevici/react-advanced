@@ -34,6 +34,9 @@ production systems because `rollup.js` is performant and easy to configure.
 
 #### rollup
 
+```bash
+npx lerna add --dev rollup --scope=@goodreads-v2/component-library
+```
 rollup will make use of babel in order to transpile es6 code into code that can be
 run in the browser. We need to add a babel config for transpiling es6 and we need to
 add the required presets and plugins.

@@ -44,6 +44,8 @@ graph LR
 
 ```bash
 git checkout 03-fast-forward-branch
+git submodule init
+git submodule update --remote
 npm run clean:all
 npm run bootstrap
 ```

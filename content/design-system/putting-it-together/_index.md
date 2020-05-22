@@ -30,6 +30,7 @@ We need to install the addons we will be using:
 ```bash
 npx lerna add @storybook/addon-actions --dev --scope=@goodreads-v2/component-library
 npx lerna add @storybook/addon-knobs --dev --scope=@goodreads-v2/component-library
+npx lerna add @storybook/addon-console --dev --scope=@goodreads-v2/component-library
 npx lerna add @storybook/addon-notes --dev --scope=@goodreads-v2/component-library
 npx lerna add @storybook/addon-viewport --dev --scope=@goodreads-v2/component-library
 npx lerna add @storybook/addon-storyshots --dev --scope=@goodreads-v2/component-library
@@ -44,9 +45,95 @@ Now that we have installed all the storybook addons we need to configure things 
 In order to get storyshots working with our setup we need to enable testing abilities for our library.
 
 ```bash
-npx lerna add jest --dev --scope=@goodreads-v2/component-library
-npx lerna add babel-jest --dev --scope=@goodreads-v2/component-library
+npx lerna add jest@^25 --dev --scope=@goodreads-v2/component-library
+npx lerna add babel-jest@^25 --dev --scope=@goodreads-v2/component-library
 ```
+
+To enable addons in storybook we need to register them:
+```javascript
+// packages/component-library/.storybook/main.js
+module.exports = {
+  stories: ['../src/**/*.stories.js'],
+  addons: [
+    '@storybook/addon-links/register',
+    '@storybook/addon-actions/register',
+    '@storybook/addon-knobs/register',
+    '@storybook/addon-viewport/register',
+  ],
+}
+```
+And also configure them in the storybook global config file:
+```javascript
+// packages/component-library/.storybook/preview.js
+import React from 'react'
+import { addDecorator, addParameters } from '@storybook/react'
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { ThemeProvider } from 'styled-components'
+import { withConsole } from '@storybook/addon-console'
+
+import theme from '../src/theme'
+
+import GlobalFonts from '../src/fonts'
+
+addParameters({
+  viewport: {
+    viewports: INITIAL_VIEWPORTS,
+  },
+})
+
+addDecorator(storyFn => (
+  <ThemeProvider theme={theme}>
+    <GlobalFonts />
+    {storyFn()}
+  </ThemeProvider>
+))
+
+addDecorator((storyFn, context) => withConsole()(storyFn)(context))
+```
+
+With that finished we can create a new story for the Artifika typography making use of all the features addons provide:
+```javascript
+// packages/component-library/src/typography/artifika.stories.js
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import colors from '../theme/colors'
+import { withKnobs, text, select } from '@storybook/addon-knobs'
+import Artifika from './artifika'
+
+storiesOf('Typography|Headings.Artifika', module)
+  .addDecorator(withKnobs)
+  .add('Basic Header with configurable style', () => {
+    const tags = {
+      H1: 'h1',
+      H2: 'h2',
+      H3: 'h3',
+      H4: 'h4',
+      H5: 'h5',
+      H6: 'h6',
+    }
+    const filteredColors = Object.keys(colors).reduce((acc, value) => {
+      if (typeof colors[value] === 'string') {
+        acc[value] = colors[value]
+      }
+      return acc
+    }, {})
+
+    const tag = select('Tags', tags, 'h1')
+    const fontColor = select(
+      'Palette',
+      filteredColors,
+      Object.entries(filteredColors).shift(1)[1]
+    )
+
+    return (
+      <Artifika tag={tag} color={fontColor}>
+        {text('Content', 'Sample Header')}
+      </Artifika>
+    )
+  })
+```
+
+Snapshots `DIY`
 
 Individual exercises:
 1) Add an npm script for running tests in component-library

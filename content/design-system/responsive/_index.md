@@ -43,14 +43,14 @@ const colors = {
 };
 
 const fontFamilies = {
-  heading: "Artifik",
+  heading: "Artifika",
   body: "PT Serif, Helvetica, Arial, sans-serif",
   code: "Roboto Mono, monospace"
 };
 
 export default {
   textStyles: {
-    spooky: {
+    artifika: {
       tag: "h1",
       fontSize: [12, 13, 14],
       fontWeight: 700,

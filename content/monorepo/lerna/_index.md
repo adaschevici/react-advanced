@@ -172,6 +172,12 @@ In order to start from the master branch of the repo the clone command is a bit 
 git clone --recurse-submodules git@github.com:adaschevici/goodreads-v2.git
 ```
 
+When you switch to another branch and the folder of the submodule is not there
+```bash
+git submodule init
+git submodule update --remote
+```
+
 #### Add dependencies, and manage them
 There are a few commands that we will use throughout that work in bulk.
 - clean all node_modules
@@ -200,3 +206,11 @@ There are a few commands that we will use throughout that work in bulk.
   Adding multiple packages at once does not seem to work very well with lerna because lerna does
   multiple things when it installs a package.
   {{% /notice %}}
+
+  {{% notice warning %}}
+  If at any point you get an error like this one:
+  `lerna ERR! EFILTER No packages remain after filtering [ '<some-package-name>' ]` check the package.json of the
+  package you want to add the dependency to and see if the name is exactly what you are instructing lerna to use.
+  By default `lerna [command]` uses the package.json defined variables for running.
+  {{% /notice %}}
+

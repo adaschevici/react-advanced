@@ -26,20 +26,25 @@ This is not something you will do very often when working on a project however
 it is one of the big decisions when starting the project out, especially if the
 design is a highly custom and potentially exotic one.
 
+The location of our custom font is in github in the fonts folder
+`https://github.com/adaschevici/oldv2/tree/02-design-system/packages/component-library/src/fonts`
+Download the `.woff` and `.woff2` files and put them in `packages/component-lbrary/src/fonts`. If folder does not exist
+create it.
+
 The way to create the global import for the fonts is by using the `createGlobalStyle` from `styled-components`
 ```javascript
-// src/fonts/index.js
+// packages/component-library/src/fonts/index.js
 import { createGlobalStyle } from "styled-components";
 
-import SpookyWoff from "./CCSpookytooth-Italic.woff";
-import SpookyWoff2 from "./CCSpookytooth-Italic.woff2";
+import ArtifikaWoff from "./Artifika-Regular.woff";
+import ArtifikaWoff2 from "./Artifika-Regular.woff2";
 
 export default createGlobalStyle`
   @font-face {
-    font-family: 'Spooky Italic';
-    src: local('Spooky Italic'), local('SpookyItalic'),
-    url(${SpookyWoff2}) format('woff2'),
-    url(${SpookyWoff}) format('woff');
+    font-family: 'Artifika';
+    src: local('Artifika'), local('SpookyItalic'),
+    url(${ArtifikaWoff2}) format('woff2'),
+    url(${ArtifikaWoff}) format('woff');
     font-weight: 300;
     font-style: normal;
   }
@@ -111,7 +116,7 @@ export default {
 #### Variants
 Besides defining and bundling the fonts we also need to declare
 the size variants for Headings(h1, h2, h3, etc), body, footer and so on.
-While it may seem that the avialable text format tags in html give enough
+While it may seem that the available text format tags in html give enough
 flexibility in complex projects you will find that typography components
 can blow up in number.
 
@@ -124,9 +129,12 @@ For building the variants `styled-components` goes hand in hand with `styled-sys
 `styled-components` provides the css in JS while `styled-system` provides the standards
 to define the generic components for your different text styles.
 
-The generic component that is used for text components, as a base looks something like this.
+The generic component we will use for text components, as a base looks something like this. This is designed for
+reusability however if you require any extra props you should define them as you need. In our project we won't require
+extra props.
 
 ```javascript
+// packages/component-library/src/typography/dynamic-component.js
 import React from "react";
 import styled from "styled-components";
 import {
@@ -180,7 +188,7 @@ it is very configurable.
 
 We then use the `DynamicComponent` to wrap our various text styles.
 ```javascript
-// src/typography/artifika.js
+// packages/component-library/src/typography/artifika.js
 import React from 'react'
 import DynamicComponent from './dynamic-component'
 
@@ -205,8 +213,17 @@ export default props => (
 ```
 
 Wiring everything together we need to re-export the defined components from
-the index file in our typography so that we can use it like this: `import { Spooky } from "typography";`
+the index file in our typography so that we can use it like this:
+
 ```javascript
+import { typography } from "@goodreads-v2/component-library"
+const { Artifika } = typography
+```
+
+As your project will evolve you may want to have the typography in its own package.
+
+```javascript
+// packages/component-library/src/typography/index.js
 import Artifika from './artifika'
 
 export { Artifika }

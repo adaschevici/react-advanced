@@ -14,6 +14,7 @@ Combining this centralized config with `styled-system` style scales
 gives us the strong foundation we need for developing theming capabilities.
 
 ```javascript
+// packages/component-library/src/theme/index.js
 // http://chir.ag/projects/name-that-color/
 const colors = {
   bostonBlue: "#428bca",
