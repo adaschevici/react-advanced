@@ -94,7 +94,7 @@ The seven-headed monster you’ll see at the top of the project’s website and 
   ```json
   //packages/goodreads/package.json
   {
-  "name": "@goodreads-v2/good-reads",
+  "name": "@goodreads-v2/goodreads",
   "version": "0.1.0",
   "private": true,
   ....
