@@ -83,21 +83,25 @@ The seven-headed monster you’ll see at the top of the project’s website and 
   }
   ```
 
-- add app package we can do this via `create-react-app`
+- add app package using `create-react-app`
 
-  - add create-react-app
+  ```bash
+  npx create-react-app packages/goodreads
+  ```
 
-    ```bash
-    npm i create-react-app
-    ```
+  - replace the name field in the goodreads app
 
-  - create app
+  ```json
+  //packages/goodreads/package.json
+  {
+  "name": "@goodreads-v2/good-reads",
+  "version": "0.1.0",
+  "private": true,
+  ....
+  }
+  ```
 
-    ```bash
-    npx create-react-app packages/goodreads
-    ```
-
-- add the dependency on the mocked api, we cand do this using git submodules
+- add the dependency on the mocked api, we can do this using git submodules
 
   ```bash
   git submodule add git@github.com:adaschevici/jungle-jim.git packages/monkey-api
