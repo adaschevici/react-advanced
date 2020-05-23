@@ -8,10 +8,10 @@ draft = false
 
 #### There are multiple alternatives for a mono repo solution
 
-1) D.I.Y
-2) yarn workspaces
-3) lerna
-4) mix of lerna and yarn
+1. D.I.Y
+2. yarn workspaces
+3. lerna
+4. mix of lerna and yarn
 
 #### Why should you care?
 
@@ -35,6 +35,7 @@ in other directory as you would an npm package. In order to enable
 workspaces you need to have the project configured.
 
 In `<project-root>/package.json`
+
 ```json
 {
   "private": true,
@@ -61,18 +62,18 @@ For example this would add react in a workspace:
 Lerna has been around longer than yarn workspaces. It has similar features
 and it achieves similar goals.
 
-
 #### lerna and yarn(with or without workspaces)
 
 This is the most convoluted and it requires both a lerna config and a yarn workspace
 config. This is more unusual because configs have some degree of redundancy.
 
 #### yarn workspaces vs lerna
-1) lerna is more mature and has more features beside monorepo management. It also allows
-for more sofisticated dependency handlling.
-2) you can't install more than one package at once in a package with lerna
-3) in yarn workspaces the packages are hoisted automatically so you won't have duplicate
-react dependencies which is a common misshap when using lerna
+
+1. lerna is more mature and has more features beside monorepo management. It also allows for more sophisticated dependency handlling.
+2. you can't install more than one package at once in a package with lerna
+3. in yarn workspaces the packages are hoisted automatically so you won't have duplicate
+   react dependencies which is a common misshap when using lerna
 
 ### The Gist 📌
+
 {{< lazy-image image="monorepo.png" lightbox=false />}}
