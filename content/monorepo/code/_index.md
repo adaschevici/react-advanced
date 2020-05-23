@@ -10,9 +10,9 @@ draft = false
 
 #### Now let's put to good use what we learned so far
 
-1. We want to build a component with `styled-components`
-2. export that component from the component-library and import it into the goodreads app
-3. build the storybook showcase
+1. we want to build a component with `styled-components`
+2. build the storybook showcase
+3. export that component from the component-library and import it into the goodreads app
 4. build the react app with the added dependency on the component library
 5. add the npm scripts to the top level `package.json` in order to allow us to run commands easier (ie clean, bootstrap,
    build component library, build storybook, build app)
