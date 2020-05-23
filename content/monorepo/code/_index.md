@@ -15,7 +15,7 @@ draft = false
 3. build the storybook showcase
 4. build the react app with the added dependency on the component library
 5. add the npm scripts to the top level `package.json` in order to allow us to run commands easier (ie clean, bootstrap,
-   build component library, build storybook, build app, build storybook)
+   build component library, build storybook, build app)
 
 ### Boilerplate
 
