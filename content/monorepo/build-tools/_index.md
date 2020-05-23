@@ -154,10 +154,16 @@ Easy to set up:
 ```bash
 // add the storybook cli package
 npx lerna add --dev @storybook/cli --scope=@goodreads-v2/component-library
+```
 
+```bash
 // run sb init to pull in dependencies and configure the package
 npx lerna exec sb init --scope=@goodreads-v2/component-library
 ```
+
+{{% notice tip %}}
+When prompted for choosing project type, choose REACT
+{{% /notice %}}
 
 Needs some configuration as well:
 
