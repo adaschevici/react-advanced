@@ -141,7 +141,7 @@ is optimally configured for the environment you are building for.
 
 ### Storybook
 
-Storybook, while not required is very useful for show casing components, component usage
+Storybook, while not required is very useful for showcasing components, component usage
 variants and themes. Storybook has an active community and also we have quite a few addons
 for various features.
 
