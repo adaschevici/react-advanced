@@ -74,26 +74,35 @@ Once we have this utility method we can test our components both functionally an
 For example a simple snapshot test of the App component would look something like this.
 
 ```javascript
+// packages/goodreads/src/components/app/index.test.js
 import React from 'react'
 import { createStore } from 'redux'
 import { createRenderer } from '../../../test-utils'
-import App from '../../../components/app'
-import reducer from '../../../components/app/reducer'
+import App from '.'
+import reducer from './reducer'
 
-const fakeState = {
-  authStatus: {
-    username: 'anonymous',
-  },
-  books: {
-    isLoading: false,
-  },
-}
-const render = createRenderer(reducer, fakeState)
-
-test('renders learn react link', () => {
-  const store = createStore(() => fakeState)
-  const component = render(<App />, { store })
-  expect(component).toMatchSnapshot()
+describe('test suite for app component', () => {
+  let fakeState
+  const render = createRenderer(reducer, fakeState)
+  beforeEach(() => {
+    fakeState = {
+      auth: {
+        username: 'anonymous',
+      },
+      books: {
+        isLoading: false,
+        meta: [],
+        images: [],
+        booksInProgress: [],
+        ratings: []
+      },
+    }
+  })
+  it('renders app component and matches snapshot', () => {
+    const store = createStore(() => fakeState)
+    const component = render(<App />, { store })
+    expect(component).toMatchSnapshot()
+  })
 })
 ```
 
