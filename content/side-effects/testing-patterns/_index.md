@@ -186,6 +186,7 @@ describe('book-list selectors', () => {
 Sagas are a bit trickier to test but then again side effects are usually the most difficult part in the testing. We make
 use of jest mocking extensively to avoid api roundtrips
 ```javascript
+// packages/goodreads/src/store/sagas/__tests__/login.test.js
 import * as api from '../../api'
 import { LOGIN_SUCCEEDED } from '../../../components/login/actions'
 import { executeSaga } from '../../../test-utils/sagas'
