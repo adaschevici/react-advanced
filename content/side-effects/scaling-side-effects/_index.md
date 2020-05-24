@@ -36,7 +36,8 @@ class AuthCheck extends Component {
   }
 }
 
-const mapStateToProps = ({ username }) => {
+const mapStateToProps = (state) => {
+  const { username } = state.auth
   return { username }
 }
 
@@ -142,7 +143,7 @@ import {
 } from '../../containers/auth-checker/actions'
 ...
 
-export const watchAuthStatus = function* watchAuthCheck() {
+export const watchAuth = function* watchAuthCheck() {
   try {
     const { data } = yield call(api.checkToken)
     yield put({
@@ -177,15 +178,17 @@ We have multiple API sources at this point:
 - `/auth/register` - creating new user account
 - `/auth/check-token` - verify http token for validity whenever a component is mounted or receives new props
 
-This is pretty great, however we will notice:
-- our application is a really slow so performance needs some work still
-- the requests are not synced correctly caused by the intermittent delays that are baked in intentionally into the API
-
 ## Case study (part I)
 
-- Orchestrating the API requests so that the data is available more reliably for the `BookCard` component:
-  we want to add functionality in the book saga to handle wating for data from `/images`, `/meta`, `/ratings` to be
-  finished before attempting to render the book grid
+- Orchestrating the API requests so that we introduce composability for our other watcher sagas. We will be able to
+  simply create an array of the existing sagas and apply the call to them. In order to allow the sagas to execute we
+  need to wrap the execution in `all` otherwise they won't execute.
+
+  {{% notice info %}}
+  `all` from sagas is a bit misleading in its naming and the docs. It will not wait for completion on sagas, only on
+  promises. It will not block and wait but rather run the sagas in parallel. If you want to orchestrate results to be available
+  at the same time you need to use `all` together with the requests and update the store once the response data is ready
+  {{% /notice %}}
 
 ## Bonus points
 - Add actions, sagas and reducer cases for starting to read a book

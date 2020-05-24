@@ -24,7 +24,7 @@ the component.
 
 Another issue when working with large amounts of data in the redux store is duplication. You need to deal with the
 challenges of duplicate data by normalizing the redux store. [Data normalization](#data-normalization) is a great idea but adds extra
-complexity when extracting data from it. One of the more complicated examples in our project can be found in the
+complexity when extracting data from the store. One of the more complicated examples in our project can be found in the
 `book-list` component. Reselect helps us deal with store data complexity.
 
 ```javascript
@@ -33,18 +33,23 @@ function mapStateToProps(state) {
     meta,
     images,
     ratings,
-    isLoading,
-    error,
-    booksInProgress,
+    isLoadingMeta,
+    isLoadingImages,
+    isLoadingRatings,
+    errorImages,
+    errorRatings,
+    errorMeta,
   } = state.books
-  const { error: authError, username } = state.authStatus
+  const { error: authError, username } = state.auth
   const authenticated = authError === null
   return {
     meta,
     images,
     ratings,
     isLoading,
-    error,
+    errorImages,
+    errorRatings,
+    errorMeta,
     authenticated,
     username,
     booksInProgress,
@@ -103,8 +108,9 @@ This approach is opinionated and you should use the approach that feels most nat
 hard and fast rules.
 {{% /notice %}}
 
-#### Our first selector `packages/goodreads/src/components/book-list/selectors.js` 🎉
+#### Our first selector 🎉
 ```javascript
+// packages/goodreads/src/components/book-list/selectors.js
 import { createSelector } from 'reselect'
 
 const getMeta = (state) => state.books.meta
@@ -125,7 +131,30 @@ export const getBooks = createSelector(
 This is a memoized selector as described [here](https://github.com/reduxjs/reselect#creating-a-memoized-selector)
 
 ## Case study (part II)
-- Create a selector for the books in progress array
+- Let's take some time and create a saga to fetch the books in progress and also a selector for the book in progress
+  array since it will require some data crunching from the entire books array. In order to add a book to the
+  booksInProgress array for a user you need to edit the monkey-api json data file.
+
+```json
+  // packages/monkey-api/data/data.average.json
+{
+  [
+  ...
+  ],
+  "users": [
+    {
+      "id": "am@bam.com",
+      "passwordHash": "$2b$12$t5nytw5tt0hCiIuBu1VhVus1R6sV5ze64lKjjOGVEyDotgfUqkSdi"
+    }
+  ],
+  "book-progress": [
+    {
+      "id": "am@bam.com",
+      "books": [9780312283000]
+    }
+  ]
+}
+```
 
 ## Bonus points
 - have a look at other state slicing and try to simplify the redux state access using selectors
