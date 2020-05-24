@@ -190,3 +190,16 @@ function loadStories() {
 
 configure(loadStories, module);
 ```
+
+The storybook config we ran before has added a few npm scripts:
+
+```json
+// packages/component-library/package.json
+...
+  "scripts": {
+    ...
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+...
+```

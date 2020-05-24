@@ -17,8 +17,9 @@ In order to avoid code duplication we will use a render prop pattern to create a
 rendered before its children and populates the store with the slice of user information retrieved from the auth checker
 endpoint.
 
-The container should look something like this `packages/goodreads/src/containers/auth-checker/index.js`
+The container should look something like this 
 ```javascript
+// packages/goodreads/src/containers/auth-checker/index.js
 import { Component } from 'react'
 import { checkAuth } from './actions'
 import { connect } from 'react-redux'
@@ -73,10 +74,11 @@ to have a very standard development pattern for dealing with an http request.
 
 We already saw what a barebone component looks like. Actions are standard as well.
 
-#### SagaMiddleware `packages/goodreads/src/store/index.js`
+#### SagaMiddleware
 
 The sagaMiddleware needs to be created and also started for it to work
-{{< highlight javascript "hl_lines=11 34" >}}
+{{< highlight javascript "hl_lines=12 35" >}}
+// packages/goodreads/src/store/index.js
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
@@ -89,20 +91,7 @@ const composeEnhancers = composeWithDevTools({
 
 const sagaMiddleware = createSagaMiddleware()
 
-const logger = ({ getState }) => (next) => (action) => {
-  const console = window.console
-  const prevState = getState()
-  const returnValue = next(action)
-  const nextState = getState()
-  const actionType = String(action.type)
-  const message = `action ${actionType}`
-  console.log(`%c prev state`, `color: #9E9E9E`, prevState)
-  console.log(`%c action`, `color: #03A9F4`, message)
-  console.log(`%c next state`, `color: #4CAF50`, nextState)
-  return returnValue
-}
-
-const middlewares = [sagaMiddleware, logger]
+const middlewares = [sagaMiddleware]
 
 export default function configureStore(initialState = {}) {
   const store = createStore(
@@ -132,13 +121,13 @@ actions to side effect handlers that are called watchers.
 
 {{< highlight javascript >}}
 import { takeLatest } from 'redux-saga/effects'
-import { CHECK_AUTH_STARTED } from '../../containers/auth-checker/actions'
+import { CHECK_AUTH_REQUEST } from '../../containers/auth-checker/actions'
 ...
 import { watchAuthStatus } from './login'
 
 export default function* rootSaga() {
   ...
-  yield takeLatest(CHECK_AUTH_STARTED, watchAuthStatus)
+  yield takeLatest(CHECK_AUTH_REQUEST, watchAuthStatus)
 }
 {{< /highlight >}}
 

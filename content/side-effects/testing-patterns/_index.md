@@ -211,11 +211,11 @@ describe('login saga functionality', () => {
 Testing action is nothing special, usually you would essentially check the shape of the action object
 ```javascript
 // packages/goodreads/src/components/book-list/__tests__/actions.test.js
-import { FETCH_BOOKS_STARTED } from '../actions'
+import { FETCH_BOOKS_REQUEST } from '../actions'
 import { fetchBooks } from '../actions'
 
 test('creates a fetch action', () => {
-  const expected = { type: FETCH_BOOKS_STARTED }
+  const expected = { type: FETCH_BOOKS_REQUEST }
   expect(fetchBooks()).toEqual(expected)
 })
 ```
