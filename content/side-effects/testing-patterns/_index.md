@@ -135,6 +135,8 @@ Because selectors are functions the testing is very straightforward, it has some
 memoization.
 
 {{<  highlight javascript "hl_lines=31-33" >}}
+// packages/goodreads/src/components/book-list/__tests__/selectors.test.js
+import { getBooks } from '../selectors'
 describe('book-list selectors', () => {
   const state = {
     books: {
