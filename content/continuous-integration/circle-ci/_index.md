@@ -76,6 +76,21 @@ Deployment should be done as part of the pipeline and should be the last step, o
 passed and the bundle builds have completed successfully. There are various options for the deployment, we
 used a platform called netlify which is very straightforward to integrate for static websites.
 
+The option we used to deploy is as a static website on netlify:
+```bash
+npm i -S netlify-cli
+npx netlify login # perform oauth2 login to netlify so that the cli has access to the netlify api
+```
+
+In order to deploy the site to netlify you will need an NETLIFY_ACCESS_TOKEN and a NETLIFY_SITE_ID. You can get the
+NETLIFY_SITE_ID when you create the site like so
+
+```bash
+npx netlify sites:create --name goodreads-v2
+```
+
+and you can create an access token from in your user settings under Applications.
+
 ```yaml
   deploy-goodreads:
     executor:

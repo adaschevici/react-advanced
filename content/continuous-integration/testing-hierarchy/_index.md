@@ -69,27 +69,23 @@ package.json
 After we added the coverage test script in our respective packages we also want to have a shortcut script to run it from
 the root. As previously the script will be a lerna command wired into our npm scripts.
 
-{{< highlight json "hl_lines=20">}}
+{{< highlight json "hl_lines=16">}}
   ...
   "scripts": {
-    "clean": "lerna clean",
-    "bootstrap": "npm i && lerna bootstrap",
-    "clean:root": "rm -rf node_modules",
-    "clean:locks": "find . -type f -name 'package-lock.json' -exec rm {} +",
-    "clean:all": "npm-run-all clean clean:root clean:locks",
-    "bootstrap:all": "npm i && npm run bootstrap",
     "build:components": "lerna exec npm run build --scope=@goodreads-v2/component-library",
-    "build:storybook": "lerna exec npm run build-storybook --scope=@goodreads-v2/component-library",
-    "build:app": "lerna exec npm run build --scope=@goodreads-v2/goodreads",
-    "start:storybook": "lerna exec npm run storybook --scope=@goodreads-v2/component-library",
-    "static:storybook": "docker run --rm -p 8080:80 -v $(pwd)/packages/component-library/storybook-static/:/usr/share/nginx/html nginx",
-    "static:goodreads": "docker run --rm -p 8080:80 -v $(pwd)/packages/goodreads/build/:/usr/share/nginx/html nginx",
-    "start:goodreads": "lerna exec npm start --scope=@goodreads-v2/goodreads",
+    "storybook": "lerna exec npm run storybook --scope=@goodreads-v2/component-library",
+    "build-storybook": "lerna exec npm run build-storybook --scope=@goodreads-v2/component-library",
+    "start:app": "lerna exec npm start --scope=@goodreads-v2/goodreads",
     "start:server": "lerna exec npm run server:dev --scope=jungle-jim",
-    "start:app": "npm-run-all --parallel start:server start:goodreads",
-    "snapshot:components": "lerna exec npm run test --scope=@goodreads-v2/component-library",
-    "test:app": "lerna exec npm run test --scope=@goodreads-v2/goodreads",
-    "test:app-cov": "lerna exec npm run test:coverage --scope=@goodreads-v2/goodreads"
+    "start:goodreads": "npm-run-all --parallel start:server start:app",
+    "clean:package-locks": "find . -type f -name 'package-lock.json' -exec rm {} +",
+    "clean:lerna": "lerna clean",
+    "clean:root-modules": "rm -rf node_modules",
+    "clean": "npm-run-all clean:lerna clean:root-modules clean:package-locks",
+    "bootstrap": "npm i && lerna bootstrap",
+    "test:components": "lerna exec npm test --scope=@goodreads-v2/component-library",
+    "test:goodreads": "lerna exec npm test --scope=@goodreads-v2/goodreads",
+    "test:goodreads:cov": "lerna exec npm run test:coverage --scope=@goodreads-v2/goodreads"
   },
   ...
 {{< /highlight >}}
