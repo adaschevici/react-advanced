@@ -134,7 +134,7 @@ export async function executeSaga(saga, initialAction) {
 Because selectors are functions the testing is very straightforward, it has some caveats though because of the
 memoization.
 
-{{<  highlight javascript "hl_lines=31-33" >}}
+{{<  highlight javascript "hl_lines=33-35" >}}
 // packages/goodreads/src/components/book-list/__tests__/selectors.test.js
 import { getBooks } from '../selectors'
 describe('book-list selectors', () => {
