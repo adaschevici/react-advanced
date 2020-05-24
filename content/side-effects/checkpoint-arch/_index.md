@@ -26,8 +26,9 @@ to a version which implements a decent number of components to consume our API d
 #### Getting started and useful npm scripts
 
 ```bash
-npm run start:goodreads # brings up both app and api servers
+npm run storybook # starts storybook
 npm run build:components # calls the rollup build for the components
+npm run start:goodreads # brings up both app and api servers
 npm run test:components # runs the snapshot tests on the component library via storyshots
 npm run test:components -- -- -- -u # update snapshots so that snapshots are up to date
 ```
