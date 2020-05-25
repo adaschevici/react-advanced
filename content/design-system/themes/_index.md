@@ -39,7 +39,7 @@ const fontFamilies = {
 
 export default {
   textStyles: {
-    spooky: {
+    artifika: {
       tag: "h1",
       fontSize: 12,
       fontWeight: 700,
