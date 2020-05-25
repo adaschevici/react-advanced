@@ -43,13 +43,6 @@ export default (props) => (
     <AlertComponent {...props} />
   </StyledAlertComponent>
 )
-`;
-
-export default props => (
-  <StyledAlertComponent>
-    <AlertComponent {...props} />
-  </StyledAlertComponent>
-);
 ```
 
 {{% notice warning %}}
