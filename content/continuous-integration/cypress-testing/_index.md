@@ -23,13 +23,51 @@ than selenium and webdriver. The cypress tools allow for a great deal of flexibi
 them out locally quite easily.
 
 ```bash
-npx cypress open # run this from inside packages/goodreads
+npx lerna exec cypress open --scope=@goodreads-v2/goodreads # run this from inside packages/goodreads
 ```
 This will open the browser and test runner for your app. It is very intuitive and has quite a few features. It will
 allow you to run your tests on multiple browsers with little to no effort.
 
 {{< lazy-image image="runner-tool.png" lightbox=false />}}
 
+In order to be able to run tests you also need to start the goodreads app then open the cypress runner.
+By now your root `package.json` should be looking something like this and we want to add a few more to be able to run
+the mock api with a test endpoint for resetting the state. This is the good thing about working with a mock API. You can
+pretty much make it do whatever you need. You can emulate poor network conditions and taking snapshots of the database.
+
+{{< highlight json "hl_lines=10-11 19-20">}}
+// package.json
+...
+  "scripts": {
+    "build:components": "lerna exec npm run build --scope=@goodreads-v2/component-library",
+    "storybook": "lerna exec npm run storybook --scope=@goodreads-v2/component-library",
+    "build-storybook": "lerna exec npm run build-storybook --scope=@goodreads-v2/component-library",
+    "start:app": "lerna exec npm start --scope=@goodreads-v2/goodreads",
+    "start:server": "lerna exec npm run server:dev --scope=jungle-jim",
+    "start:server": "lerna exec npm run server:dev --scope=jungle-jim",
+    "start:server:test": "lerna exec npm run server:test --scope=jungle-jim",
+    "start:goodreads:test": "npm-run-all --parallel start:server:test start:app",
+    "clean:package-locks": "find . -type f -name 'package-lock.json' -exec rm {} +",
+    "clean:lerna": "lerna clean",
+    "clean:root-modules": "rm -rf node_modules",
+    "clean": "npm-run-all clean:lerna clean:root-modules clean:package-locks",
+    "bootstrap": "npm i && lerna bootstrap",
+    "test:components": "lerna exec npm test --scope=@goodreads-v2/component-library",
+    "test:goodreads": "lerna exec npm test --scope=@goodreads-v2/goodreads",
+    "cypress:start": "lerna exec cypress open --scope=@goodreads-v2/goodreads",
+    "cypress:run": "lerna exec cypress run --scope=@goodreads-v2/goodreads"
+  },
+...
+{{< /highlight >}}
+
+It's a good idea to create npm scripts for delegating from lerna to the packages in the repo as it will make running the
+commands easier and doesn't require you to change into their respective directory every time.
+
+To run the app we have to:
+```bash
+npm run start:goodreads:test
+npm run start:cypress
+```
 You can see that the cypress folder contains a fair amount of stuff, but it is quite neatly organized. You will notice
 the integration, screnshots and videos folders, this is where the videos and screenshots will be stored for your test
 runs.
@@ -73,6 +111,7 @@ I will use it to write some tests that will provide some degree of confidence ab
 scenarios work(this is called a [smoke test](https://en.wikipedia.org/wiki/Smoke_testing_(software))):
 - registration works
 ```javascript
+// packages/goodreads/cypress.json
 // packages/goodreads/cypress/integration/goodreads/register.spec.js
 describe('Registration works', () => {
   beforeEach(() => {
@@ -104,8 +143,8 @@ describe('Registration works', () => {
   })
 })
 ```
-You will notice that this test can only be run once because it alters API state. A good approach is to have an endpoint
-on your API that allows you to revert to an older version of the data.json.
+You will notice that if we did not have the API with a snapshot endpoint it would only be able to run this test once
+only. A good approach is to have an endpoint on your API that allows you to revert to an older version of the data.<env>.json.
 
 #### Brainstorming
 Can you think of other tests that would make sense as part of the smoke test? Keep in mind that our focus is to have the
@@ -163,7 +202,7 @@ A simple test for checking the `/register` path in the app for visual regression
 // packages/goodreads/cypress/integration/goodreads/register.spec.js
   ...
   it('Looks as expected', () => {
-    cy.document().toMatchImageSnapshot({
+    cy.document().toMatchImageSnapshot({ // this options object is optional and has some sane defaults
       "createDiffImage": true,                // Should a "diff image" be created, can be disabled for performance
       "threshold": 0.01,                      // Amount in pixels or percentage before snapshot image is invalid
       "name": "custom image name",            // Naming resulting image file with a custom name rather than concatenating test titles
@@ -182,51 +221,6 @@ the base image that future runs will try to match against. The resulting directo
       [ ]register.spec.js
 ```
 
-We will also add a few scripts to make running the scripts quicker
-{{< highlight json "hl_lines=19-21" >}}
-// package.json
-  ...
-  "scripts": {
-    "build:components": "lerna exec npm run build --scope=@goodreads-v2/component-library",
-    "storybook": "lerna exec npm run storybook --scope=@goodreads-v2/component-library",
-    "build-storybook": "lerna exec npm run build-storybook --scope=@goodreads-v2/component-library",
-    "start:app": "lerna exec npm start --scope=@goodreads-v2/goodreads",
-    "start:server": "lerna exec npm run server:dev --scope=jungle-jim",
-    "start:goodreads": "npm-run-all --parallel start:server start:app",
-    "clean:package-locks": "find . -type f -name 'package-lock.json' -exec rm {} +",
-    "clean:lerna": "lerna clean",
-    "clean:root-modules": "rm -rf node_modules",
-    "clean": "npm-run-all clean:lerna clean:root-modules clean:package-locks",
-    "bootstrap": "npm i && lerna bootstrap",
-    "test:components": "lerna exec npm test --scope=@goodreads-v2/component-library",
-    "test:goodreads": "lerna exec npm test --scope=@goodreads-v2/goodreads",
-    "test:goodreads:cov": "lerna exec npm run test:coverage --scope=@goodreads-v2/goodreads",
-    "start:goodreads:cy": "lerna exec npm run cypress:open --scope=@goodreads-v2/goodreads",
-    "start:server:test": "lerna exec npm run server:test --scope=jungle-jim",
-    "start:goodreads:test": "npm-run-all --parallel start:server:test start:app",
-    "test:goodreads:cy": "lerna exec npm run cypress:run --scope=@goodreads-v2/goodreads"
-  },
-  },
-  ...
-{{< /highlight >}}
-
-{{< highlight json "hl_lines=9-10">}}
-// packages/goodreads/package.json
-  ...
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:coverage": "CI=true react-scripts test --env=jsdom --collect-coverage",
-    "eject": "react-scripts eject",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
-  },
-  ...
-{{< /highlight >}}
-
-It's a good idea to create npm scripts for delegating from lerna to the packages in the repo as it will make running the
-commands easier and doesn't require you to change into their respective directory every time.
 {{% notice tip %}}
 The great benefit of using this type of testing is that you can actually have a test suite that checks how pages look
 on various size devices, check for cropping on smaller sizes etc..., and you only need to do this once 🎉🎉🎉

@@ -137,6 +137,7 @@ memoization.
 {{<  highlight javascript "hl_lines=33-35" >}}
 // packages/goodreads/src/components/book-list/__tests__/selectors.test.js
 import { getBooks } from '../selectors'
+
 describe('book-list selectors', () => {
   const state = {
     books: {

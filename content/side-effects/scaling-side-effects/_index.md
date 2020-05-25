@@ -75,7 +75,7 @@ projects will use `thunks` to resolve data however when using thunks exclusively
 do to callback hell.
 
 Every request/response cycle has 3 actions associated (request start, request success, request failed). Sagas allow us
-to have a very standard development pattern for dealing with an http request.
+to have a very standard development pattern for dealing with any http request.
 
 We already saw what a barebone component looks like. Actions are standard as well.
 

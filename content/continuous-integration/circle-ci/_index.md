@@ -24,13 +24,19 @@ In order to be able to run the tests you need to run the mocked API, the webpack
 command. This is an npm script that looks like this more details can be found in the
 [docs](https://docs.cypress.io/guides/guides/continuous-integration.html#Boot-your-server) as well:
 
+In order to run the cypress tests in one go we want to install an alternative server runner in the root of the monorepo:
+
+```bash
+npm i -S start-server-and-test
+```
+
 ```bash
   "scripts": {
     ...
-    "start:app-test": "npm-run-all --parallel start:test-server start:goodreads",
-    "start:cy-app": "lerna exec cypress open --scope=@goodreads-v2/goodreads",
-    "test:cy": "lerna exec cypress run --scope=@goodreads-v2/goodreads",
-    "test:integration": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start:app-test http-get://localhost:3000 test:cy"
+    "start:goodreads:test": "npm-run-all --parallel start:server:test start:goodreads",
+    "cypress:open": "lerna exec cypress open --scope=@goodreads-v2/goodreads",
+    "cypress:run": "lerna exec cypress run --scope=@goodreads-v2/goodreads",
+    "test:integration": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start:goodreads:test http-get://localhost:3000 cypress:run"
     ...
   }
 ```
@@ -62,6 +68,73 @@ types of persistence for assets: workspace, cache and artifact.
 - Workspace: is preserved in the same workflow
 - Artifact: is persisted after the execution of the CircleCI pipeline
 
+## Our CircleCI config file
+```yaml
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-and-test-components:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm run bootstrap
+            - run: npm run test:components
+            - run: npm run build:components
+            - save_cache:
+                key: components-lib-{{ .Revision }}
+                paths:
+                  - packages/component-library/lib
+                  - packages/component-library/lib/fonts
+
+  test-goodreads:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - restore_cache:
+                keys:
+                  - components-lib-{{ .Revision }}
+            - run: npm run bootstrap
+            - run: npm run test:goodreads
+  build-goodreads:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - restore_cache:
+                keys:
+                  - components-lib-{{ .Revision }}
+            - run: npm run bootstrap
+            - run: npm run build:goodreads
+            - save_cache:
+                key: goodreads-v2-{{ .Revision }}
+                paths:
+                  - packages/goodreads/build
+  deploy-goodreads:
+    ...
+workflows:
+    build-components-and-app:
+      jobs:
+        - build-and-test-components
+        - test-goodreads:
+            requires:
+              - build-and-test-components
+        - build-goodreads:
+            requires:
+              - build-and-test-components
+        - deploy-goodreads:
+            requires:
+              - build-goodreads
+```
+
 ## Security
 The storage of the various secrets needs to be done as pipeline environment variables so that it does not make its way
 into git.
@@ -76,14 +149,16 @@ Deployment should be done as part of the pipeline and should be the last step, o
 passed and the bundle builds have completed successfully. There are various options for the deployment, we
 used a platform called netlify which is very straightforward to integrate for static websites.
 
-The option we used to deploy is as a static website on netlify:
+The option we used to deploy is as a static website on netlify. You need to create an account with [netlify](https://www.netlify.com/), I would recommend using github to login as we
+will be using the netlify app as part of our app deployment.
+
 ```bash
 npm i -S netlify-cli
 npx netlify login # perform oauth2 login to netlify so that the cli has access to the netlify api
 ```
 
-In order to deploy the site to netlify you will need an NETLIFY_ACCESS_TOKEN and a NETLIFY_SITE_ID. You can get the
-NETLIFY_SITE_ID when you create the site like so
+In order to deploy the site to netlify you will need an `NETLIFY_ACCESS_TOKEN` and a `NETLIFY_SITE_ID`. You can get the
+`NETLIFY_SITE_ID` when you create the site like so
 
 ```bash
 npx netlify sites:create --name goodreads-v2

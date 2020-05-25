@@ -130,32 +130,6 @@ export const getBooks = createSelector(
 ```
 This is a memoized selector as described [here](https://github.com/reduxjs/reselect#creating-a-memoized-selector)
 
-## Case study (part II)
-- Let's take some time and create a saga to fetch the books in progress and also a selector for the book in progress
-  array since it will require some data crunching from the entire books array. In order to add a book to the
-  booksInProgress array for a user you need to edit the monkey-api json data file.
-
-```json
-  // packages/monkey-api/data/data.average.json
-{
-  [
-  ...
-  ],
-  "users": [
-    {
-      "id": "am@bam.com",
-      "passwordHash": "$2b$12$t5nytw5tt0hCiIuBu1VhVus1R6sV5ze64lKjjOGVEyDotgfUqkSdi"
-    }
-  ],
-  "book-progress": [
-    {
-      "id": "am@bam.com",
-      "books": [9780312283000]
-    }
-  ]
-}
-```
-
 ## Bonus points
 - have a look at other state slicing and try to simplify the redux state access using selectors
 
@@ -218,6 +192,7 @@ return (
 
 You can check the profiling after adding the selectors by adding the profiler logs in the `mapStateToProps` method where
 the selector functions are called
+
 ```javascript
 function mapStateToProps(state) {
   const { isLoading, error } = state.books
