@@ -151,13 +151,15 @@ for various features.
 
 Easy to set up:
 
+- add the storybook cli package
+
 ```bash
-// add the storybook cli package
 npx lerna add --dev @storybook/cli --scope=@goodreads-v2/component-library
 ```
 
+- run sb init to pull in dependencies and configure the package
+
 ```bash
-// run sb init to pull in dependencies and configure the package
 npx lerna exec sb init --scope=@goodreads-v2/component-library
 ```
 
