@@ -128,7 +128,7 @@ import { watchAuthStatus } from './login'
 
 export default function* rootSaga() {
   ...
-  yield takeLatest(CHECK_AUTH_REQUEST, watchAuthStatus)
+  yield takeLatest(CHECK_AUTH_REQUEST, watchAuth)
 }
 {{< /highlight >}}
 
