@@ -183,43 +183,43 @@ the base image that future runs will try to match against. The resulting directo
 ```
 
 We will also add a few scripts to make running the scripts quicker
-{{< highlight json "hl_lines=22-25" >}}
+{{< highlight json "hl_lines=19-21" >}}
 // package.json
   ...
   "scripts": {
-    "clean": "lerna clean",
-    "bootstrap": "npm i && lerna bootstrap",
-    "clean:root": "rm -rf node_modules",
-    "clean:locks": "find . -type f -name 'package-lock.json' -exec rm {} +",
-    "clean:all": "npm-run-all clean clean:root clean:locks",
-    "bootstrap:all": "npm i && npm run bootstrap",
     "build:components": "lerna exec npm run build --scope=@goodreads-v2/component-library",
-    "build:storybook": "lerna exec npm run build-storybook --scope=@goodreads-v2/component-library",
-    "build:app": "lerna exec npm run build --scope=@goodreads-v2/goodreads",
-    "start:storybook": "lerna exec npm run storybook --scope=@goodreads-v2/component-library",
-    "static:storybook": "docker run --rm -p 8080:80 -v $(pwd)/packages/component-library/storybook-static/:/usr/share/nginx/html nginx",
-    "static:goodreads": "docker run --rm -p 8080:80 -v $(pwd)/packages/goodreads/build/:/usr/share/nginx/html nginx",
-    "start:goodreads": "lerna exec npm start --scope=@goodreads-v2/goodreads",
+    "storybook": "lerna exec npm run storybook --scope=@goodreads-v2/component-library",
+    "build-storybook": "lerna exec npm run build-storybook --scope=@goodreads-v2/component-library",
+    "start:app": "lerna exec npm start --scope=@goodreads-v2/goodreads",
     "start:server": "lerna exec npm run server:dev --scope=jungle-jim",
-    "start:test-server": "lerna exec npm run server:test --scope=jungle-jim",
-    "start:app": "npm-run-all --parallel start:server start:goodreads",
-    "snapshot:components": "lerna exec npm run test --scope=@goodreads-v2/component-library",
-    "test:app": "lerna exec npm run test --scope=@goodreads-v2/goodreads",
-    "start:app-test": "npm-run-all --parallel start:test-server start:goodreads",
-    "start:cy-app": "lerna exec cypress open --scope=@goodreads-v2/goodreads",
-    "test:cy": "lerna exec cypress run --scope=@goodreads-v2/goodreads"
+    "start:goodreads": "npm-run-all --parallel start:server start:app",
+    "clean:package-locks": "find . -type f -name 'package-lock.json' -exec rm {} +",
+    "clean:lerna": "lerna clean",
+    "clean:root-modules": "rm -rf node_modules",
+    "clean": "npm-run-all clean:lerna clean:root-modules clean:package-locks",
+    "bootstrap": "npm i && lerna bootstrap",
+    "test:components": "lerna exec npm test --scope=@goodreads-v2/component-library",
+    "test:goodreads": "lerna exec npm test --scope=@goodreads-v2/goodreads",
+    "test:goodreads:cov": "lerna exec npm run test:coverage --scope=@goodreads-v2/goodreads",
+    "start:goodreads:cy": "lerna exec npm run cypress:open --scope=@goodreads-v2/goodreads",
+    "start:server:test": "lerna exec npm run server:test --scope=jungle-jim",
+    "start:goodreads:test": "npm-run-all --parallel start:server:test start:app",
+    "test:goodreads:cy": "lerna exec npm run cypress:run --scope=@goodreads-v2/goodreads"
+  },
   },
   ...
 {{< /highlight >}}
 
-{{< highlight json "hl_lines=8">}}
+{{< highlight json "hl_lines=9-10">}}
 // packages/goodreads/package.json
   ...
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "CI=true react-scripts test --env=jsdom --collect-coverage",
     "eject": "react-scripts eject",
+    "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
   ...
