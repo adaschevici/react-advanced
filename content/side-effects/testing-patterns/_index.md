@@ -189,7 +189,7 @@ use of jest mocking extensively to avoid api roundtrips
 // packages/goodreads/src/store/sagas/__tests__/login.test.js
 import * as api from '../../api'
 import { LOGIN_SUCCEEDED } from '../../../components/login/actions'
-import { executeSaga } from '../../../test-utils/sagas'
+import { executeSaga } from '../../../../test-utils/sagas'
 import { watchLogin } from '../login'
 
 describe('login saga functionality', () => {
@@ -223,12 +223,12 @@ describe('login saga functionality', () => {
 Testing action is nothing special, usually you would essentially check the shape of the action object
 ```javascript
 // packages/goodreads/src/components/book-list/__tests__/actions.test.js
-import { FETCH_BOOKS_REQUEST } from '../actions'
-import { fetchBooks } from '../actions'
+import { FETCH_IMAGES_REQUEST } from '../actions'
+import { fetchImages } from '../actions'
 
 test('creates a fetch action', () => {
-  const expected = { type: FETCH_BOOKS_REQUEST }
-  expect(fetchBooks()).toEqual(expected)
+  const expected = { type: FETCH_IMAGES_REQUEST }
+  expect(fetchImages()).toEqual(expected)
 })
 ```
 #### Reducers
