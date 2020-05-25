@@ -26,7 +26,5 @@ draft = false
 ### 🏁 Checkpoint 🏁
 
 ```bash
-git checkout 06-performance
-npm run clean:all
-npm run bootstrap
+git clone https://github.com/adaschevici/react-manhattan
 ```

@@ -30,7 +30,7 @@ graph LR
     end
     id1(theme) ==defines==> id2(colors, spacing, breakpoints, font sizes and weights)
     id3(typography) ==defines==> id4(fonts, text styles)
-    id5(storybook) ====> id6(playground for working with components and snapshot tests)
+    id5(storybook) ==is==> id6(playground for working with components and snapshot tests)
 {{</mermaid>}}
 
 
