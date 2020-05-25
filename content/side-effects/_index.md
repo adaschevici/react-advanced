@@ -45,8 +45,7 @@ id3(register component) ==stateful==> id2(functional components using hooks)
 
 ```bash
 git checkout 03-fast-forward-branch
-git submodule init
-git submodule update --remote
+git submodule add git@github.com:adaschevici/jungle-jim.git packages/monkey-api
 npm run clean
 npm run bootstrap
 ```
