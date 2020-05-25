@@ -25,9 +25,13 @@ import { checkAuth } from './actions'
 import { connect } from 'react-redux'
 
 class AuthCheck extends Component {
+  componentDidUpdate() {
+    const { dispatch } = this.props
+    dispatch(checkAuth())
+  }
   componentDidMount() {
     const { dispatch } = this.props
-    return dispatch(checkAuth())
+    dispatch(checkAuth())
   }
 
   render() {
@@ -121,10 +125,11 @@ The rootSaga is a collation of all the sagas and is added to the middleware coll
 actions to side effect handlers that are called watchers.
 
 {{< highlight javascript >}}
+// packages/goodreads/src/store/sagas/index.js
 import { takeLatest } from 'redux-saga/effects'
 import { CHECK_AUTH_REQUEST } from '../../containers/auth-checker/actions'
 ...
-import { watchAuthStatus } from './login'
+import { watchLogin, watchRegistration, watchAuth } from './login'
 
 export default function* rootSaga() {
   ...
@@ -132,9 +137,10 @@ export default function* rootSaga() {
 }
 {{< /highlight >}}
 
-The watchers are the actuall functionality and this is where you will write the most of the functionality.
+The watchers are the actual functionality for handling the actions and this is where we will write most of our code for side effects
 
 {{< highlight javascript >}}
+// packages/goodreads/src/store/sagas/login.js
 import { call, put } from 'redux-saga/effects'
 import * as api from '../api'
 import {
@@ -162,6 +168,117 @@ export const watchAuth = function* watchAuthCheck() {
   }
 }
 {{< /highlight >}}
+
+- Actions: 
+
+```javascript
+// packages/goodreads/src/containers/auth-checker/actions.js
+export const CHECK_AUTH_REQUEST = 'CHECK_AUTH_REQUEST'
+export const CHECK_AUTH_SUCCEEDED = 'CHECK_AUTH_SUCCEEDED'
+export const CHECK_AUTH_FAILED = 'CHECK_AUTH_FAILED'
+
+export const checkAuth = () => ({
+  type: CHECK_AUTH_REQUEST,
+})
+```
+- Reducers:
+
+```javascript
+// packages/goodreads/src/containers/auth-checker/reducer.js
+import {
+    CHECK_AUTH_REQUEST,
+    CHECK_AUTH_SUCCEEDED,
+    CHECK_AUTH_FAILED,
+  } from './actions'
+  
+  const initialState = {
+    isLoading: false,
+    username: null,
+    error: 'Not authenticated',
+  }
+  
+  export default function authChecker(state = initialState, action) {
+    switch (action.type) {
+      case CHECK_AUTH_REQUEST: {
+        return {
+          ...state,
+          error: 'Not authenticated',
+          isLoading: true,
+        }
+      }
+      case CHECK_AUTH_SUCCEEDED: {
+        return {
+          ...state,
+          username: action.payload.username,
+          error: null,
+          isLoading: false,
+        }
+      }
+      case CHECK_AUTH_FAILED: {
+        return {
+          ...state,
+          isLoading: false,
+          error: action.payload.error,
+        }
+      }
+      default: {
+        return state
+      }
+    }
+  }
+```
+- Update rootReducer
+
+{{< highlight javascript >}}
+// packages/goodreads/src/store/rootReducer.js
+import { combineReducers } from 'redux'
+import appReducer from '../components/app/reducer'
+import booksReducer from '../components/book-list/reducer'
+import loginReducer from '../components/login/reducer'
+import registerReducer from '../components/register/reducer'
+import authReducer from '../containers/auth-checker/reducer'
+
+export default combineReducers({
+  app: appReducer,
+  books: booksReducer,
+  login: loginReducer,
+  register: registerReducer,
+  auth: authReducer
+})
+{{< /highlight >}}
+
+- Update app.js
+
+```javascript
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { components } from '@goodreads-v2/component-library'
+import './index.css'
+import BookList from '../book-list'
+
+const { NavBar } = components
+
+class App extends Component {
+  render() {
+    const { username, authenticated } = this.props
+    return (
+      <div className="App">
+        <NavBar authenticated={authenticated} username={username} />
+        <main style={{ height: '70vh' }}>
+          <BookList />
+        </main>
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  const { username, error } = state.auth
+  const authenticated = error === null
+  return { username, authenticated }
+}
+export default connect(mapStateToProps)(App)
+```
 
 The decoupling between the http requests and the actions allows you to combine the responses and avoid the callback hell
 alltogether. IMO that is pretty cool especially when working with microservices or even services. If a component
