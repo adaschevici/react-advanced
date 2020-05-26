@@ -23,7 +23,7 @@ than selenium and webdriver. The cypress tools allow for a great deal of flexibi
 them out locally quite easily.
 
 ```bash
-npx lerna exec cypress open --scope=@goodreads-v2/goodreads # run this from inside packages/goodreads
+npx lerna exec cypress open --scope=@goodreads-v2/goodreads
 ```
 This will open the browser and test runner for your app. It is very intuitive and has quite a few features. It will
 allow you to run your tests on multiple browsers with little to no effort.
@@ -54,7 +54,7 @@ pretty much make it do whatever you need. You can emulate poor network condition
     "bootstrap": "npm i && lerna bootstrap",
     "test:components": "lerna exec npm test --scope=@goodreads-v2/component-library",
     "test:goodreads": "lerna exec npm test --scope=@goodreads-v2/goodreads",
-    "cypress:start": "lerna exec cypress open --scope=@goodreads-v2/goodreads",
+    "cypress:open": "lerna exec cypress open --scope=@goodreads-v2/goodreads",
     "cypress:run": "lerna exec cypress run --scope=@goodreads-v2/goodreads"
   },
 ...
