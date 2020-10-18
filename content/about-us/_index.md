@@ -4,7 +4,7 @@ date = 2020-03-07T16:32:04Z
 draft = false
 +++
 
-{{< lazy-image image="Simona&Artur.jpg" lightbox=false />}}
+{{< lazy-image image="Simona&Artur.jpg" lightbox=false alt="Happy people" />}}
 
 Artur Daschevici Full Stack Engineer, Passionate about all things tech related, with wide area of expertise ranging from backend, DevOps, Front End, working with Django, React, React Native.
 Artur is currently on a hiatus, working on independent projects. Part time speaker.
